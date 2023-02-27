@@ -1,11 +1,17 @@
 // import data from "../data";
-import { Link } from "react-router-dom";
-import { useEffect, useReducer, useState } from "react";
+// import { Link } from "react-router-dom";
+import { useEffect, useReducer, } from "react";
 import axios from "axios"
 import logger from "use-reducer-logger"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Product from "../components/Product";
+import {Helmet} from "react-helmet-async"
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+// messagebox para colocar una caja con un mensjae de error cuando no carguen los productos
+// helmet es para que en la pestaña de la pagina , salga el nombre de la pagina donde se está actualmente
+// loadingbox es para que se vea la animacion de "loading" mientras se cargan los productos
 
 
 const reducer = (state, action) =>{
@@ -49,12 +55,15 @@ const HomeScreen = () =>{
     }, [])
     return( 
        <div>
+        <Helmet>
+            <title>Amazone</title>
+        </Helmet>
          <h1>Featured Products</h1>
         <div className="products">
         {
-            loading ?( <div>Loading...</div>)
+            loading ?( <LoadingBox/>)
             :
-            error?(<div>{error}</div>)
+            error?(<MessageBox variant="danger">{error}</MessageBox>)
             :
             (
             <Row>
